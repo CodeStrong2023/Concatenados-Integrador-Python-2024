@@ -44,6 +44,29 @@
         <p class="p">&copy; 2024 TorneosARG. Todos los derechos reservados.</p>
     </footer>
 
+    <div class="chat-container">
+        <div id="chat-box"></div>
+        <input type="text" id="user-input" placeholder="Escribe tu mensaje..." />
+        <button id="send-button">Enviar</button>
+    </div>
+
+    <div class="card">
+        <div id="header">
+          <h1>Chatbot T-ARG</h1>
+        </div>
+        <div id="message-section">
+          <div class="message" id="bot"><span id="bot-response">Hola! en qué puedo ayudarte?</span></div>
+        </div>
+        <div id="input-section">
+          <input id="input" type="text" placeholder="Escribe tu mensaje..." autocomplete="off" autofocus="autofocus"/>
+          <button class="send" onclick="sendMessage()">
+            <div class="circle">
+                <img src="img/send.png" alt="" width="60" height="60">
+            </div>
+          </button>
+        </div>
+      </div>
+
     <script src="script.js"></script>
 </body>
 </html>

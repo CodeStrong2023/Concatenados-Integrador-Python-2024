@@ -1,5 +1,7 @@
 import json
 import urllib
+from http.cookies import SimpleCookie
+
 import psycopg2
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import cgi
@@ -57,6 +59,8 @@ class ServerHandler(BaseHTTPRequestHandler):
                 self.wfile.write(f.read())
         elif path.startswith('/img/'):
             self.serve_static_file(path, 'image')  # Servir archivos de imagen
+        elif path == '/mis-torneos':
+            self.get_user_tournaments()
         else:
             self.send_response(404)
             self.end_headers()
@@ -97,6 +101,10 @@ class ServerHandler(BaseHTTPRequestHandler):
             self.handle_login()  # Manejar inicio de sesión
         elif path == '/logout':
             self.handle_logout()  # Manejar cierre de sesión
+        elif path == '/inscribir':
+            self.register_tournament()
+        elif self.path == '/logout':
+            self.handle_logout()
         else:
             self.send_response(404)
             self.end_headers()
@@ -207,16 +215,22 @@ class ServerHandler(BaseHTTPRequestHandler):
                     valores = (username, password)
                     cursor.execute(sentencia, valores)
                     usuario = cursor.fetchone()
+                    sentencia = 'SELECT id FROM users WHERE username = %s AND password = %s'
+                    cursor.execute(sentencia, valores)
+                    id_usuario = cursor.fetchone()
+
 
             if usuario:
                 # Respuesta exitosa si el usuario existe
                 self.send_response(200)
                 self.send_header('Content-type', 'application/json')
+                self.send_header('Set-Cookie', f'user_id={id_usuario[0]}; Path=/; HttpOnly')
                 self.send_header('Access-Control-Allow-Origin', '*')  # Permitir acceso CORS
                 self.send_header('Access-Control-Allow-Methods', 'POST, OPTIONS')
                 self.send_header('Access-Control-Allow-Headers', 'Content-Type')
                 self.end_headers()
-                self.wfile.write(json.dumps({'success': True, 'message': 'Inicio de sesión exitoso', 'username': usuario[0]}).encode())
+                self.wfile.write(json.dumps({'success': True, 'message': 'Inicio de sesión exitoso', 'username': usuario[0], 'id': id_usuario[0]}).encode())
+                print(id_usuario[0])
             else:
                 # Respuesta de credenciales incorrectas si no se encuentra el usuario
                 self.send_response(401)
@@ -253,6 +267,130 @@ class ServerHandler(BaseHTTPRequestHandler):
 
         # Aquí podrías añadir más lógica si necesitas limpiar variables de sesión específicas.
 
+
+    def register_tournament(self):
+        cookie = SimpleCookie(self.headers.get('Cookie'))
+        user_id = cookie.get('user_id').value if cookie.get('user_id') else None
+
+
+        form = cgi.FieldStorage(
+            fp=self.rfile,
+            headers=self.headers,
+            environ={'REQUEST_METHOD': 'POST'}
+        )
+
+        tournament_id = form.getvalue('tournament_id')
+
+        if not user_id or not tournament_id:
+            self.send_response(400)
+            self.send_header('Content-type', 'application/json')
+            self.end_headers()
+            self.wfile.write(json.dumps({'success': False, 'message': 'Todos los campos son obligatorios.'}).encode())
+            return
+
+        try:
+            conexion = psycopg2.connect(
+                user='postgres',
+                password='admin',
+                host='127.0.0.1',
+                port='5432',
+                database='Integrador'
+            )
+
+            with conexion:
+                with conexion.cursor() as cursor:
+                    # Verificar si el usuario ya está inscrito en el torneo
+                    cursor.execute('SELECT * FROM user_tournaments WHERE user_id = %s AND torneos_id = %s',
+                                   (user_id, tournament_id))
+                    existing_registration = cursor.fetchone()
+
+                    if existing_registration:
+                        # Si el usuario ya está inscrito, enviar respuesta de error
+                        self.send_response(400)
+                        self.send_header('Content-type', 'application/json')
+                        self.end_headers()
+                        self.wfile.write(
+                            json.dumps({'success': False, 'message': 'Ya estás inscrito en este torneo.'}).encode())
+                        return
+                    sentencia = 'INSERT INTO user_tournaments (user_id, torneos_id) VALUES (%s, %s)'
+                    valores = (user_id, tournament_id)
+                    cursor.execute(sentencia, valores)
+                    conexion.commit()
+
+            self.send_response(200)
+            self.send_header('Content-type', 'application/json')
+            self.end_headers()
+            self.wfile.write(json.dumps({'success': True, 'message': 'Inscripción exitosa'}).encode())
+        except psycopg2.Error as e:
+            self.send_response(500)
+            self.send_header('Content-type', 'application/json')
+            self.end_headers()
+            self.wfile.write(json.dumps({'success': False, 'message': f'Error: {e}'}).encode())
+        finally:
+            if 'conexion' in locals() and conexion is not None:
+                conexion.close()
+
+    def get_user_tournaments(self):
+        """
+        Maneja la solicitud de obtener los torneos inscritos por un usuario.
+        """
+        cookie = SimpleCookie(self.headers.get('Cookie'))
+        user_id = cookie.get('user_id').value if cookie.get('user_id') else None
+
+        if not user_id:
+            self.send_response(400)
+            self.send_header('Content-type', 'application/json')
+            self.end_headers()
+            self.wfile.write(json.dumps({'success': False, 'message': 'Usuario no autenticado.'}).encode())
+            return
+
+        try:
+            conexion = psycopg2.connect(
+                user='postgres',
+                password='admin',
+                host='127.0.0.1',
+                port='5432',
+                database='Integrador'
+            )
+
+            with conexion:
+                with conexion.cursor() as cursor:
+                    # Consultar los nombres de los torneos inscritos por el usuario
+                    cursor.execute('''
+                        SELECT t.nombre
+                        FROM torneos t
+                        INNER JOIN user_tournaments ut ON t.id = ut.torneos_id
+                        WHERE ut.user_id = %s
+                    ''', (user_id,))
+                    torneos = cursor.fetchall()
+
+            # Crear una lista de nombres de torneos
+            nombres_torneos = [torneo[0] for torneo in torneos]
+
+            # Enviar una respuesta con los nombres de los torneos
+            self.send_response(200)
+            self.send_header('Content-type', 'application/json')
+            self.end_headers()
+            self.wfile.write(json.dumps({'success': True, 'torneos': nombres_torneos}).encode())
+
+        except psycopg2.Error as e:
+            self.send_response(500)
+            self.send_header('Content-type', 'application/json')
+            self.end_headers()
+            self.wfile.write(json.dumps({'success': False, 'message': f'Error: {e}'}).encode())
+
+        finally:
+            if 'conexion' in locals() and conexion is not None:
+                conexion.close()
+
+    def handle_logout(self):
+
+        self.send_response(200)
+        self.send_header('Content-type', 'application/json')
+        self.send_header('Set-Cookie', 'session=; expires=Thu, 01 Jan 1970 00:00:00 GMT')  # Expira la cookie de sesión
+        self.end_headers()
+        response = {'success': True, 'message': 'Sesión cerrada exitosamente'}
+        self.wfile.write(json.dumps(response).encode())
 
 def run_server():
     """

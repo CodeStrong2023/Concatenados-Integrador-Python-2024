@@ -1,22 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TorneosARG</title>
+    <!-- Enlace a la hoja de estilos -->
     <link rel="stylesheet" href="styles.css">
+    <!-- Enlace a las fuentes de Google -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Contenedor principal -->
     <div class="principal">
-        
-        
-       <section id="nav" class="nav">
+        <!-- Sección de navegación -->
+        <section id="nav" class="nav">
             <nav class="panel-home">
                 <a href="/home.html">
-                    <img src="/img/logo.png" alt="" height="100" width="100">
+                    <img src="/img/logo.png" alt="Logo de TorneosARG" height="100" width="100">
                 </a>
                 <div class="user-panel">
                     <div class="user-name">
@@ -25,22 +27,23 @@
                         </ul>
                     </div>
                     <ul class="user-buttons">
-                        <li >
-                            <div class="torneos"  onclick="misTorneos()">
-                                <img src="img/joystick-64.png" alt="" height="40" width="40">
+                        <li>
+                            <div class="torneos" onclick="misTorneos()">
+                                <img src="img/joystick-64.png" alt="Icono de joystick" height="40" width="40">
                                 <a>Mis torneos</a>
                             </div>
                         </li>
-                        <li >
+                        <li>
                             <div class="logout" onclick="logout()">
-                                <img src="img/logout-64.png" alt="" height="40" width="40">
-                                <a href="">Cerrar sesión</a> 
+                                <img src="img/logout-64.png" alt="Icono de logout" height="40" width="40">
+                                <a href="#">Cerrar sesión</a>
                             </div>
                         </li>
                     </ul>
                 </div>
             </nav>
-       </section>
+        </section>
+        <!-- Sección de inicio -->
         <section id="home" class="hero">
             <div class="hero-content-home">
                 <div class="logo-text">
@@ -50,86 +53,79 @@
                     <div class="img-logo">
                         <img src="img/logo.png" id="logo" alt="Logo" height="200" width="200">
                     </div>
-                </div> 
+                </div>
             </div>
         </section>
-        
+        <!-- Sección de galería -->
         <section id="gallery" class="gallery">
             <div class="gallery-images">
                 <div class="torneo-contenedor">
                     <img src="img/Rocket-League.jpg" alt="Rocket League">
                     <button class="inscripcion" id="1">Inscribirme</button>
                 </div>
-
                 <div class="torneo-contenedor">
                     <img src="img/cs-go.webp" alt="CS: GO">
                     <button class="inscripcion" id="2">Inscribirme</button>
                 </div>
-                    
                 <div class="torneo-contenedor">
                     <img src="img/valorant.jpg" alt="Valorant">
-                    <button  class="inscripcion" id="3">Inscribirme</button>
+                    <button class="inscripcion" id="3">Inscribirme</button>
                 </div>
-
                 <div class="torneo-contenedor">
                     <img src="img/Fortnite.webp" alt="Fortnite">
                     <button class="inscripcion" id="4">Inscribirme</button>
                 </div>
-                    
                 <div class="torneo-contenedor">
                     <img src="img/Fifa.webp" alt="Fifa">
                     <button class="inscripcion" id="5">Inscribirme</button>
                 </div>
-                    
                 <div class="torneo-contenedor">
                     <img src="img/Lol.jpg" alt="LoL">
                     <button class="inscripcion" id="6">Inscribirme</button>
                 </div>
-                 
             </div>
         </section>
     </div>
+    <!-- Contenedor secundario -->
     <div class="secundaria">
+        <!-- Sección sobre nosotros -->
         <section id="about" class="about">
             <h2>Sobre nosotros</h2>
             <p>TorneosARG es una plataforma diseñada para conectar jugadores de todo el mundo en torneos de videojuegos.</p>
         </section>
     </div>
-    
+    <!-- Pie de página -->
     <footer>
         <p>&copy; 2024 TorneosARG. Todos los derechos reservados.</p>
     </footer>
-
-    <div class="chat-container">
-        <div id="chat-box"></div>
-        <input type="text" id="user-input" placeholder="Escribe tu mensaje..." />
-        <button id="send-button">Enviar</button>
-    </div>
-
+    
+    <!-- Modal para mensajes -->
     <div id="modal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
             <p id="tournament-list"></p>
         </div>
     </div>
-
+    <!-- Tarjeta del chatbot -->
     <div class="card">
         <div id="header">
-          <h1>Chatbot T-ARG</h1>
+            <h1>Chatbot T-ARG</h1>
         </div>
         <div id="message-section">
-          <div class="message" id="bot"><span id="bot-response">Hola! en qué puedo ayudarte?</span></div>
+            <div class="message" id="bot">
+                <span id="bot-response">Hola! en qué puedo ayudarte?</span>
+            </div>
         </div>
         <div id="input-section">
-          <input id="input" type="text" placeholder="Escribe tu mensaje..." autocomplete="off" autofocus="autofocus"/>
-          <button class="send" onclick="sendMessage()">
-            <div class="circle">
-                <img src="img/send.png" alt="" width="60" height="60">
-            </div>
-          </button>
+            <input id="input" type="text" placeholder="Escribe tu mensaje..." autocomplete="off" autofocus="autofocus"/>
+            <button class="send" onclick="sendMessage()">
+                <div class="circle">
+                    <img src="img/send.png" alt="Enviar" width="60" height="60">
+                </div>
+            </button>
         </div>
-      </div>
-
+    </div>
+    <!-- Enlace al archivo JavaScript -->
     <script src="script.js"></script>
 </body>
 </html>

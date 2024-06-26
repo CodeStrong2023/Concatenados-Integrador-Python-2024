@@ -6,6 +6,7 @@
     <title>TorneosARG</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <script src="https://kit.fontawesome.com/f9881d51d6.js" crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap" rel="stylesheet">
 </head>
@@ -60,28 +61,21 @@
             <p>TorneosARG es una plataforma diseñada para conectar jugadores de todo el mundo en torneos de videojuegos.</p>
         </section>
     </div>
-    
+
     <!-- Pie de página -->
     <footer>
         <p>&copy; 2024 TorneosARG. Todos los derechos reservados.</p>
     </footer>
-    
-    <!-- Contenedor del chatbot -->
-    <div class="card">
-        <div id="header">
-          <h1>Chatbot T-ARG</h1>
+
+        <!-- Contenedor del chatbot -->
+    <a href="#" class="btn-flotante" onclick="toggleChat()"><i class="fa-regular fa-message"></i></a>
+
+    <div id="chat-container">
+        <div id="chat-window">
+            <div id="chat-messages"></div>
         </div>
-        <div id="message-section">
-          <div class="message" id="bot"><span id="bot-response">Hola! ¿En qué puedo ayudarte?</span></div>
-        </div>
-        <div id="input-section">
-          <input id="input" type="text" placeholder="Escribe tu mensaje..." autocomplete="off" autofocus="autofocus"/>
-          <button class="send" onclick="sendMessage()">
-            <div class="circle">
-                <img src="img/send.png" alt="" width="60" height="60">
-            </div>
-          </button>
-        </div>
+        <input type="text" id="message" class="message" placeholder="Escribe tu mensaje aquí..." onkeypress="handleKeyPress(event)">
+        <button onclick="sendMessage()">Enviar</button>
     </div>
 
     <!-- Script JavaScript -->

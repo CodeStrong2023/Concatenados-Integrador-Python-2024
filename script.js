@@ -216,3 +216,81 @@ function logout() {
         alert('Ocurrió un error. Por favor, inténtelo de nuevo más tarde.');
     });
 }
+
+//Ventana emergente del chatbot
+var chatOpen = false; // Variable para controlar el estado del chat
+
+function toggleChat() {
+    var chatContainer = document.getElementById('chat-container');
+    if (!chatOpen) {
+        chatContainer.style.display = 'block';
+        chatOpen = true;
+    } else {
+        chatContainer.style.display = 'none';
+        chatOpen = false;
+    }
+}
+
+function mostrarBienvenida() {
+    const mensaje_bienvenida = "¡Hola! Bienvenido a TorneosARG. ¿En qué puedo ayudarte?\n MENU:\n 1. Torneos\n 2. Horarios\n 3. Reglas";
+
+    addMessageToChat("Chatbot", mensaje_bienvenida);
+}
+
+//Ventana del chatbot
+document.addEventListener("DOMContentLoaded", function() {
+    const messageInput = document.getElementById("message");
+    const chatMessages = document.getElementById("chat-messages");
+
+    mostrarBienvenida();  //Dar mensaje de bienvenida al abrir el chatbot
+
+    // Función para enviar el mensaje al presionar "Enter"
+    messageInput.addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            sendMessage();
+        }
+    });
+});
+
+//Logica del chatbot
+async function sendMessage() {
+    const message = document.getElementById("message").value;
+    if (message.trim() === "") {
+        return; // No enviar mensajes vacíos
+    }
+
+    // Mostrar el mensaje del usuario en el chat
+    addMessageToChat("Usuario", message);
+
+    // Enviar el mensaje al servidor
+    const response = await fetch("/chat", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ message: message })
+    });
+    const data = await response.json();
+
+    // Mostrar la respuesta del chatbot en el chat
+    addMessageToChat("Chatbot", data.response);
+
+    // Limpiar el campo de entrada
+    document.getElementById("message").value = "";
+}
+
+function addMessageToChat(sender, message) {
+    const chatMessages = document.getElementById("chat-messages");
+    const messageElement = document.createElement("div");
+    messageElement.classList.add("chat-message");
+
+    // Reemplazar \n por <br>
+    const formattedMessage = message.replace(/\n/g, '<br>');
+
+    messageElement.innerHTML = `<strong>${sender}:</strong> ${formattedMessage}`;
+    chatMessages.appendChild(messageElement);
+
+    // Hacer scroll hasta el final del chat
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}

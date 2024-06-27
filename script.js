@@ -217,6 +217,8 @@ function logout() {
     });
 }
 
+
+
 //Ventana emergente del chatbot
 var chatOpen = false; // Variable para controlar el estado del chat
 
@@ -245,7 +247,7 @@ document.addEventListener("DOMContentLoaded", function() {
     mostrarBienvenida();  //Dar mensaje de bienvenida al abrir el chatbot
 
     // Función para enviar el mensaje al presionar "Enter"
-    messageInput.addEventListener("keypress", function(event) {
+    messageInput.addEventListener("keydown", function(event) {
         if (event.key === "Enter") {
             event.preventDefault();
             sendMessage();

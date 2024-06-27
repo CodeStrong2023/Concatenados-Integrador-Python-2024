@@ -1,49 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TorneosARG - Iniciar Sesión</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css"> <!-- Enlace al archivo CSS externo -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap" rel="stylesheet"> <!-- Enlace a la fuente de Google Fonts -->
 </head>
 <body>
+    <!-- Contenedor principal del formulario de inicio de sesión -->
     <div class="principal-form">
+        <!-- División para mostrar el logo -->
         <div class="img-logo-form">
+            <!-- Enlace al inicio con el logo de la página -->
             <a href="index.html">
                 <img src="img/logo.png" href="registro.html" id="logo" alt="Logo" height="300" width="300">
             </a>
         </div>
+        <!-- División para contener el formulario -->
         <div class="form-cont">
-            <div class="form">
-                <h1>INICIAR SESIÓN</h1>
-                <form id="login-form" class="formulario" action="/login" method="post">
+            <div class="form"> <!-- Formulario de inicio de sesión -->
+                <h1>INICIAR SESIÓN</h1> <!-- Título del formulario -->
+                <form id="login-form" class="formulario" action="/login" method="post"> <!-- Formulario de inicio de sesión -->
                     <div class="form-group">
-                        <label for="username">Nombre de usuario</label>
-                        <input type="text" id="username" name="username" required>
+                        <label for="username">Nombre de usuario</label> <!-- Etiqueta del campo de nombre de usuario -->
+                        <input type="text" id="username" name="username" required> <!-- Campo de entrada para nombre de usuario -->
                     </div>
                     <div class="form-group">
-                        <label for="password">Contraseña</label>
-                        <input type="password" id="password" name="password" required>
+                        <label for="password">Contraseña</label> <!-- Etiqueta del campo de contraseña -->
+                        <input type="password" id="password" name="password" required> <!-- Campo de entrada para contraseña -->
                     </div>
                     <div class="form-group">
-                        <button type="submit">Ingresar</button>
+                        <button type="submit">Ingresar</button> <!-- Botón de enviar formulario -->
                     </div>
                     <div class="login">
-                        <span style="color: aliceblue;">¿Eres nuevo?</span>
-                        <a href="registro.html" style="color: aliceblue;">Crea una cuenta gratis aquí</a>
+                        <span style="color: aliceblue;">¿Eres nuevo?</span> <!-- Mensaje opcional para nuevos usuarios -->
+                        <a href="registro.html" style="color: aliceblue;">Crea una cuenta gratis aquí</a> <!-- Enlace para crear una nueva cuenta -->
                     </div>
                 </form>
-             </div>
+            </div>
         </div>
     </div>
-    
+
+    <!-- Pie de página -->
     <footer class="footer-login">
-        <p class="p">&copy; 2024 TorneosARG. Todos los derechos reservados.</p>
+        <p class="p">&copy; 2024 TorneosARG. Todos los derechos reservados.</p> <!-- Texto de derechos de autor -->
     </footer>
 
+    <!-- Enlace al archivo JavaScript externo -->
     <script src="script.js"></script>
 </body>
 </html>

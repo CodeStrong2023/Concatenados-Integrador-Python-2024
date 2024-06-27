@@ -234,7 +234,7 @@ function toggleChat() {
 }
 
 function mostrarBienvenida() {
-    const mensaje_bienvenida = "¡Hola! Bienvenido a TorneosARG. ¿En qué puedo ayudarte?\n MENU:\n 1. Torneos\n 2. Horarios\n 3. Reglas";
+    const mensaje_bienvenida = "¡Hola! Bienvenido a TorneosARG. ¿En qué puedo ayudarte?\n MENU:\n 1. Torneos\n 2. Horarios\n 3. Reglas\n 4. Inscripción\n 5. Mi Perfil\n 6. Chat en vivo";
 
     addMessageToChat("Chatbot", mensaje_bienvenida);
 }

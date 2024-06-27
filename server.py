@@ -7,6 +7,8 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 import cgi
 import os
 
+from chatbot import chatbot_response
+
 class ServerHandler(BaseHTTPRequestHandler):
     """
     Clase que maneja las peticiones HTTP para un servidor simple.
@@ -103,8 +105,8 @@ class ServerHandler(BaseHTTPRequestHandler):
             self.handle_logout()  # Manejar cierre de sesión
         elif path == '/inscribir':
             self.register_tournament()
-        elif self.path == '/logout':
-            self.handle_logout()
+        elif path == '/chat':
+            self.handle_chat()
         else:
             self.send_response(404)
             self.end_headers()
@@ -391,6 +393,17 @@ class ServerHandler(BaseHTTPRequestHandler):
         self.end_headers()
         response = {'success': True, 'message': 'Sesión cerrada exitosamente'}
         self.wfile.write(json.dumps(response).encode())
+
+    def handle_chat(self):
+        content_length = int(self.headers['Content-Length'])
+        post_data = self.rfile.read(content_length)
+        message = json.loads(post_data)['message']
+        response = chatbot_response(message)
+
+        self.send_response(200)
+        self.send_header('Content-type', 'application/json')
+        self.end_headers()
+        self.wfile.write(json.dumps({'response': response}).encode())
 
 def run_server():
     """

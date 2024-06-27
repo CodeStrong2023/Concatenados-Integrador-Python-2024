@@ -209,6 +209,85 @@ footer {
     padding-top: 150px;
 }
 
+/* Boton del chatbot */
+.btn-flotante {
+	font-size: 30px; /* Cambiar el tamaño de la tipografia */
+	color: #ffffff; /* Color del texto */
+	border-radius: 5px; /* Borde del boton */
+	background-color: #e05655; /* Color de fondo */
+	padding: 10px 10px; /* Relleno del boton */
+	height: 31px;
+	position: fixed;
+	bottom: 27px;
+	right: 40px;
+	transition: all 300ms ease 0ms;
+	box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+	z-index: 99;
+}
+.btn-flotante:hover {
+	background-color: #005f5f; /* Color de fondo al pasar el cursor */
+	box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.3);
+	transform: translateY(-7px);
+}
+
+/* Area del chat */
+#chat-container {
+    display: none; /* Inicialmente oculto */
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 300px;
+    border: 1px solid #ccc0;
+    border-radius: 5px;
+    background: white;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+}
+
+#chat-window {
+    border: 1px solid #ccc0;
+    border-radius: 5px;
+    padding: 5px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+}
+
+#chat-messages {
+    font-family: "Montserrat", sans-serif;
+    list-style-type: none;
+    padding: 0;
+    overflow-y: auto;
+    max-height: 300px;
+}
+
+.chat-message {
+    margin-bottom: 10px;
+    padding: 10px 15px;
+    background-color: #e05655;
+    border-radius: 10px;
+    color: #fff;
+}
+
+#message {
+    width: 290px;
+    padding: 5px;
+    border-radius: 5px;
+    margin: 5px;
+}
+
+button {
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
 
 /* registro */
 
@@ -391,148 +470,6 @@ button:hover {
     text-decoration: none;
     cursor: pointer;
 }
-
-/*  Chatbot  */
-
-body .card {
-    position: fixed;
-    bottom: 20px; /* Distancia desde el borde inferior de la pantalla */
-    right: 20px; /* Distancia desde el borde derecho de la pantalla */
-    height: 30vh; /* Ajusta la altura del chatbot */
-    width: 25vh; /* Ajusta el ancho del chatbot */
-    background-color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    z-index: 1000; /* Asegúrate de que esté por encima de otros elementos */
-}
-
-body .card #header {
-    height: 4vh; /* Ajusta la altura del encabezado */
-    background: #e05655;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-body .card #header h1 {
-    color: #fff;
-    font-size: 1.5vh; /* Ajusta el tamaño de la fuente del encabezado */
-    font-family: "Montserrat", sans-serif;
-    margin: 0;
-}
-
-body .card #message-section {
-    height: 20vh; /* Ajusta la altura de la sección de mensajes */
-    padding: 0 1vh;
-    overflow-y: auto;
-    scrollbar-width: thin;
-    scrollbar-color: var(--thumbBG) var(--scrollbarBG);
-}
-
-body .card #message-section::-webkit-scrollbar {
-    width: 5px; /* Ajusta el tamaño del scrollbar */
-}
-
-body .card #message-section::-webkit-scrollbar-track {
-    background: var(--scrollbarBG);
-}
-
-body .card #message-section::-webkit-scrollbar-thumb {
-    background-color: var(--thumbBG);
-    border-radius: 6px;
-    border: 3px solid var(--scrollbarBG);
-}
-
-body .card #message-section #bot,
-body .card #message-section #user {
-    position: relative;
-    min-height: 1.5vh; /* Ajusta la altura mínima de los mensajes */
-    border: 0.15vh solid #777;
-    background-color: #fff;
-    border-radius: 0 1.5vh 1.5vh 1.8vh;
-    padding: 1vh;
-    margin: 1.5vh 0;
-}
-
-body .card #message-section #user {
-    border: 1.5px solid #000;
-    border-radius: 1.5vh 0 1.5vh 1.8vh;
-    background-color: #000;
-    float: right;
-}
-
-body .card #message-section #user #user-response {
-    color: #fff;
-}
-
-body .card #message-section .message {
-    color: #000;
-    clear: both;
-    line-height: 1.2vh; /* Ajusta la altura de línea de los mensajes */
-    font-size: 1.2vh; /* Ajusta el tamaño de fuente de los mensajes */
-    padding: 8px;
-    position: relative;
-    margin: 8px 0;
-    max-width: 85%;
-    word-wrap: break-word;
-    z-index: 2;
-}
-
-body .card #input-section {
-    z-index: 1;
-    padding: 0 1vh;
-    display: flex;
-    flex-direction: row;
-    align-items: flex-end;
-    overflow: hidden;
-    height: 5vh; /* Ajusta la altura de la sección de entrada */
-    width: 100%;
-}
-
-body .card #input-section input {
-    color: #000;
-    min-width: 0.5vh;
-    outline: none;
-    height: 4vh; /* Ajusta la altura del campo de entrada */
-    width: 18vh; /* Ajusta el ancho del campo de entrada */
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    border-bottom: solid #000 0.1vh;
-}
-
-body .card .send {
-    background: transparent;
-    border: 0;
-    cursor: pointer;
-    flex: 0 0 auto;
-    margin-left: 1vh;
-    padding: 0;
-    position: relative;
-    outline: none;
-}
-
-body .card .send .circle {
-    position: relative;
-    width: 3vh; /* Ajusta el tamaño del botón de enviar */
-    height: 3vh; /* Ajusta el tamaño del botón de enviar */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #ffffff;
-}
-
-body .card .send .circle img {
-    width: 2vh; /* Ajusta el tamaño del icono de enviar */
-    height: 2vh; /* Ajusta el tamaño del icono de enviar */
-}
-
-
-
 
 /* Media Queries index*/
 @media (min-width: 100px) {

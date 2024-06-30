@@ -21,6 +21,11 @@ Paso 4°: Desde pgAdmin4, crear una nueva base de datos llamada "Integrador", lu
 
 ![image](https://github.com/CodeStrong2023/Concatenados-Integrador-Python-2024/assets/71734317/abe84c47-8968-4065-a5f4-6f398d439328)
 
+❗❗❗ La conexión con la base da datos utiliza los siguientes parametros:
+
+![image](https://github.com/CodeStrong2023/Concatenados-Integrador-Python-2024/assets/71734317/4c33c8a4-36cb-42b6-9c1e-6aebd555c4d0)
+
+Si alguno no coincide con los suyos, será necesario modificarlo para poder trabajar con nuestro proyecto
 
 
 Paso 5°: Ejecutar el servidor desde la terminal:  python server.py y accedemos al link:
